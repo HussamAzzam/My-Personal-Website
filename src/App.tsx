@@ -173,7 +173,9 @@ function App() {
                         <img
                             src={profileImage}
                             alt="profile image"
-                            className={`select-none w-[18rem] h-[18rem] object-cover object-bottom`}
+                            className={`select-none w-[18rem] h-[18rem] object-cover object-bottom opacity-0 transition-opacity duration-500`}
+                            onLoad={(e) => e.currentTarget.classList.remove('opacity-0')}
+                            loading="lazy"
                         />
                     </div>
                     <div className="hero-title w-auto text-[3rem]/18 md:text-[4rem]/18 font-bold flex flex-col items-center select-none">
