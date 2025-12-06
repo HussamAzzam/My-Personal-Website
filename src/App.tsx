@@ -41,9 +41,9 @@ function App() {
         const handleClickOutside = (e: MouseEvent)=> {
             //Close if click is outside mobileMenu and mobileButton
             if(
-                mobileMenuRef &&
+                mobileMenuRef.current &&
                 !mobileMenuRef.current.contains(e.target as Node) &&
-                mobileButtonRef &&
+                mobileButtonRef.current &&
                 !mobileButtonRef.current.contains(e.target as Node)
             ) {
                 setIsMobileMenuOpen(false);
