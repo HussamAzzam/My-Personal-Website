@@ -132,6 +132,35 @@ body {
 .animate-fade-in-delay-5 {
     animation: slideUp 0.4s ease-out 0.3s backwards;
 }
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+.animate-slide-down {
+    animation: slideDown 0.3s ease-out;
+}
+.animate-slide-down-delay-1 {
+    animation: slideDown 0.4s ease-out 0.1s backwards;
+}
+
+.animate-slide-down-delay-2 {
+    animation: slideDown 0.4s ease-out 0.15s backwards;
+}
+
+.animate-slide-down-delay-3 {
+    animation: slideDown 0.4s ease-out 0.2s backwards;
+}
+
+.animate-slide-down-delay-4 {
+    animation: slideDown 0.4s ease-out 0.25s backwards;
+}
 @font-face {
     font-family: "Poppins";
     src: url("./assets/fonts/Poppins-Black.ttf") format("truetype");

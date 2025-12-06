@@ -3,17 +3,21 @@ import workstation from './assets/thumbnails/workstation-thumbnail.png';
 import Instagram from './assets/icons/instagram.png';
 import Linkedin from './assets/icons/linkedin.png';
 import Whatsapp from './assets/icons/whatsapp.png';
-import { SendHorizontal, FileDown, ArrowUpRight, GraduationCap, Mail, X} from 'lucide-react';
+import { Menu, SendHorizontal, FileDown, ArrowUpRight, GraduationCap, Mail, X} from 'lucide-react';
 import {useState, useEffect, useRef} from "react";
 function App() {
     const [contactListOpen, setContactListOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     const modalRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
+    const mobileMenuRef = useRef<HTMLDivElement>(null);
+    const mobileButtonRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
-            // Check if click is outside modal AND outside button
+            // Close if click is outside modal AND outside button
             if (
                 modalRef.current &&
                 !modalRef.current.contains(e.target as Node) &&
@@ -34,6 +38,25 @@ function App() {
     }, [contactListOpen]);
 
     useEffect(() => {
+        const handleClickOutside = (e: MouseEvent)=> {
+            //Close if click is outside mobileMenu and mobileButton
+            if(
+                mobileMenuRef &&
+                !mobileMenuRef.current.contains(e.target as Node) &&
+                mobileButtonRef &&
+                !mobileButtonRef.current.contains(e.target as Node)
+            ) {
+                setIsMobileMenuOpen(false);
+            }
+        }
+        if(isMobileMenuOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [isMobileMenuOpen]);
+
+    useEffect(() => {
         if (contactListOpen) {
             document.body.style.overflow = 'hidden';
         } else {
@@ -50,10 +73,24 @@ function App() {
         }
     }, []);
 
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+
+            if(window.innerWidth >= 768)
+                setIsMobileMenuOpen(false);
+        }
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
-        <div id={`home`} className={`font-sans flex flex-col items-center justify-between gap-10 min-h-screen w-screen bg-bg-primary text-primary-text  relative transition-all duration-300`}>
+        <div id={`home`} className={`font-sans flex flex-col items-center justify-between gap-10 min-h-screen w-screen bg-bg-primary text-primary-text  relative transition-all duration-300 overflow-x-hidden`}>
             {contactListOpen && (
-                <div className={` modal-backdrop absolute  top-50 z-50 sm:w-[30%] sm:h-[50vh] flex flex-col p-10 bg-bg-navbar rounded-4xl text-primary-text animate-fade-in`} ref={modalRef}>
+                <div className={` modal-backdrop absolute  top-50 z-50  h-[45vh] large:h-[50vh] flex flex-col justify-end p-10 bg-bg-navbar rounded-4xl text-primary-text animate-fade-in`} ref={modalRef}>
                     <div
                         className={`absolute right-5 top-5 cursor-pointer animate-slide-up`}
                         onClick={() => {setContactListOpen(false)}}
@@ -91,48 +128,70 @@ function App() {
                 </div>
             )}
           <header  className={`fixed flex justify-around items-center w-full  h-[6rem] bg-bg-navbar z-50`}>
-              <div className={`w-[60%] h-[100% - 6rem] flex justify-between items-center`}>
+              <div className={`w-[90%] md:w-[60%] h-[100% - 6rem] flex justify-between items-center`}>
                   <div className="logo flex items-center justify-center select-none">
                      <p style={{fontFamily: 'Great Vibes' }}
                         className={`text-primary-text font-bold text-4xl`}
                      >Hussam</p>
                   </div>
-                  <div className={`flex items-center justify-between gap-30 text-xl font-semibold text-primary-text`}>
-                      <a href="#home" className={`header-link`} >Home</a>
-                      <a href="#projects" className={`header-link`}>Projects</a>
-                      <a href="#education" className={`header-link`}>Education</a>
-                      <a href="#contact" className={`header-link`}>Contact</a>
-                  </div>
+                  {!isMobile && (
+                        <div className={`flex items-center justify-between gap-30 text-xl font-semibold text-primary-text`}>
+                            <a href="#home" className={`header-link`} >Home</a>
+                            <a href="#projects" className={`header-link`}>Projects</a>
+                            <a href="#education" className={`header-link`}>Education</a>
+                            <a href="#contact" className={`header-link`}>Contact</a>
+                        </div>
+                  )}
+                  {isMobile && (
+                      <button
+                          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                          ref={mobileButtonRef}
+                          className={`cursor-pointer`}
+                      >
+                          {isMobileMenuOpen ? <X size={30}/> : <Menu size={30}/>}
+                      </button>
+                  )}
               </div>
           </header>
+            {isMobile && isMobileMenuOpen && (
+                <div
+                    className={`fixed z-100 top-24 right-0 w-full flex flex-col items-center gap-15 p-10 bg-bg-navbar animate-slide-down`}
+                    ref={mobileMenuRef}
+                >
+                    <a href="#home" className={`header-link text-2xl animate-slide-down-delay-1`} onClick={() => setIsMobileMenuOpen(false)}>Home</a>
+                    <a href="#projects" className={`header-link text-2xl animate-slide-down-delay-2`} onClick={() => setIsMobileMenuOpen(false)}>Projects</a>
+                    <a href="#education" className={`header-link text-2xl animate-slide-down-delay-3`} onClick={() => setIsMobileMenuOpen(false)}>Education</a>
+                    <a href="#contact" className={`header-link text-2xl animate-slide-down-delay-4`} onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
+                </div>
+            )}
             {/*spacer for header*/}
             <div className={`h-30`}></div>
             <div className="nav-shadow w-full  bg-navbar-background"></div>
             <main className={`flex flex-1 flex-col items-center w-[60%] gap-35 mb-50`}>
                 <section id={`hero`} className="flex flex-col items-center justify-center gap-15">
-                    <div className="h-[20rem] w-[20rem] flex flex-col justify-end items-center rounded-full border-5 border-white gradient-background overflow-hidden ">
+                    <div className="h-[15rem] w-[15rem] md:h-[20rem] md:w-[20rem] flex flex-col justify-end items-center rounded-full border-5 border-white gradient-background overflow-hidden ">
                         <img
                             src={profileImage}
                             alt="profile image"
                             className={`select-none w-[18rem] h-[18rem] object-cover object-bottom`}
                         />
                     </div>
-                    <div className="hero-title w-auto  text-[4rem]/18 font-bold flex flex-col items-center select-none">
+                    <div className="hero-title w-auto text-[3rem]/18 md:text-[4rem]/18 font-bold flex flex-col items-center select-none">
                         <p className={`text-white text-center line`}>
                             Full-Stack
                             <p>Web <span className={`gradient-text`}>Developer</span></p>
                         </p>
                     </div>
                     <div className="hero-description w-auto">
-                        <p className={`w-[30ch] text-center text-secondary-text text-2xl/9`}>
+                        <p className={`w-[90%] md:w-[30ch] text-center text-secondary-text text-2xl/9`}>
                             Full-stack engineer with expertise in Nextjs, React, and cloud technologies.
                             I build fast, scalable applications with attention to both user experience and system architecture.
                         </p>
                     </div>
-                    <div className="hero-buttons w-auto flex justify-between items-center gap-10">
+                    <div className="hero-buttons w-auto flex-col md:flex md:flex-row md:justify-between md:items-center gap-10">
                         <button
                             className="contact-btn w-[15rem] h-[5rem]  flex justify-center items-center overflow-hidden
-                                       bg-white rounded-full text-bg-primary text-2xl font-bold cursor-pointer group"
+                                       bg-white rounded-full text-bg-primary text-2xl font-bold cursor-pointer group mb-10 md:mb-0"
                             ref={buttonRef}
                             onClick={(e) => {
                                 e.stopPropagation();
@@ -155,10 +214,10 @@ function App() {
                         </a>
                     </div>
                 </section>
-                <section id={`experience`} className="text-secondary-text flex flex-col items-center gap-30 select-none">
+                <section id={`experience`} className="text-secondary-text flex flex-col items-center justify-center gap-30 select-none ">
                     <p className={`text-2xl font-semibold`}>EXPERIENCE WITH</p>
 
-                    <div className={`flex items-center justify-between gap-30`}>
+                    <div className={`flex items-center justify-between gap-30 flex-wrap`}>
                         <i className="devicon-html5-plain text-[50px]"></i>
                         <i className="devicon-css3-plain text-[50px]"></i>
                         <i className="devicon-javascript-plain text-[50px]"></i>
@@ -214,7 +273,7 @@ function App() {
                 </section>
             </main>
             <div id={`contact`}></div>
-            <section   className=" w-full flex flex-col gap-10 bg-bg-navbar px-[20%] py-20">
+            <section   className=" w-full flex flex-col gap-10 bg-bg-navbar px-[5%] md:px-[20%] py-20">
                 <div className={`text-4xl font-bold text-primary-text`}>
                     Contact
                 </div>
