@@ -103,10 +103,10 @@ function App() {
                             <p className={`text-3xl `}>Jordan, Irbed</p>
                         </div>
                         <div className={`flex flex-col gap-10 animate-fade-in-delay-2`}>
-                            <a href="mailto:hosaamazzam5@gmail.com"
+                            <a href="mailto:hosaamazzam9@gmail.com"
                                className={`flex items-center gap-5 text-2xl`}>
                                 <Mail size={20}/>
-                                <p>hosaamazzam5@gmail.com</p>
+                                <p>hosaamazzam9@gmail.com</p>
                             </a>
                             <a href="https://wa.me/962781090881" target={`_blank`}
                                className={`flex items-center gap-5 text-2xl animate-fade-in-delay-3`}>
@@ -283,10 +283,10 @@ function App() {
                         and implementing robust, scalable, and innovative web solutions. Adept at leveraging a
                         comprehensive skill set encompassing front-end and back-end technologies
                     </p>
-                    <a href="mailto:hosaamazzam5@gmail.com"
+                    <a href="mailto:hosaamazzam9@gmail.com"
                        className={`flex items-center gap-5 text-2xl`}>
                        <Mail size={20}/>
-                        <p>hosaamazzam5@gmail.com</p>
+                        <p>hosaamazzam9@gmail.com</p>
                     </a>
                     <a href="https://wa.me/962781090881" target={`_blank`} className={`flex items-center gap-5 text-2xl`}>
                         <img src={Whatsapp} alt="whatsapp" width={25}/>
