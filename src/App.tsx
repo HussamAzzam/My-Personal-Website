@@ -203,8 +203,8 @@ function App() {
                             <SendHorizontal className={`translate-x-20  group-hover:translate-x-2 transition-transform duration-300 ease-in-out text-bg-primary`}/>
                         </button>
                         <a
-                            href="/Resume.pdf"
-                            download="Resume.pdf"
+                            href="/cv.pdf"
+                            download="cv.pdf"
                             className="contact-btn w-[15rem] h-[5rem] flex flex-col justify-center items-center overflow-hidden
                                      bg-bg-primary rounded-full text-text-primary text-2xl font-bold cursor-pointer
                                        group border-3 border-text-primary hover:text-bg-primary hover:bg-primary-text hover:border-primary-text transition-all duration-300 ease-in-out"
