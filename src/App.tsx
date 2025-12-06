@@ -90,7 +90,7 @@ function App() {
     return (
         <div id={`home`} className={`font-sans flex flex-col items-center justify-between gap-10 min-h-screen w-screen bg-bg-primary text-primary-text  relative transition-all duration-300 overflow-x-hidden`}>
             {contactListOpen && (
-                <div className={` modal-backdrop absolute  top-50 z-50  h-[45vh] large:h-[50vh] flex flex-col justify-end p-10 bg-bg-navbar rounded-4xl text-primary-text animate-fade-in`} ref={modalRef}>
+                <div className={` modal-backdrop absolute  top-50 z-50  h-[340px] flex flex-col justify-end p-10 bg-bg-navbar rounded-4xl text-primary-text animate-fade-in`} ref={modalRef}>
                     <div
                         className={`absolute right-5 top-5 cursor-pointer animate-slide-up`}
                         onClick={() => {setContactListOpen(false)}}
