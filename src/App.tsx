@@ -1,11 +1,27 @@
+import { Menu, SendHorizontal, FileDown, GraduationCap, Mail, X} from 'lucide-react';
+import {useState, useEffect, useRef} from "react";
+
+// @ts-ignore
+import ProjectCard from "./components/ProjectCard.jsx"
+
 import profileImage from './assets/images/profile-image.png';
-import workstation from './assets/thumbnails/workstation-thumbnail.png';
+import workstationImage from './assets/thumbnails/workstation-thumbnail.png';
+import massarImage from './assets/thumbnails/Massar.jpeg'
+import sawsanCakeImage from './assets/thumbnails/sawsan-cake.jpeg'
+
 import Instagram from './assets/icons/instagram.png';
 import Linkedin from './assets/icons/linkedin.png';
 import Whatsapp from './assets/icons/whatsapp.png';
-import { Menu, SendHorizontal, FileDown, ArrowUpRight, GraduationCap, Mail, X} from 'lucide-react';
-import {useState, useEffect, useRef} from "react";
+
+
+
 function App() {
+    const projects = [
+        {name: "Workstation", image: workstationImage, link: "https://workstation-q09c.onrender.com" },
+        {name: "Massar", image: massarImage, link: "https://massar-xudh.onrender.com"},
+        {name: "Sawsan Cake", image: sawsanCakeImage, link: "/"}
+    ]
+
     const [contactListOpen, setContactListOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
@@ -90,14 +106,14 @@ function App() {
     return (
         <div id={`home`} className={`font-sans flex flex-col items-center justify-between gap-10 min-h-screen w-screen bg-bg-primary text-primary-text  relative transition-all duration-300 overflow-x-hidden`}>
             {contactListOpen && (
-                <div className={` modal-backdrop absolute  top-50 z-50  h-[340px] flex flex-col justify-end p-10 bg-bg-navbar rounded-4xl text-primary-text animate-fade-in`} ref={modalRef}>
+                <div className={` modal-backdrop absolute  top-50 z-50   flex flex-col justify-end p-10 bg-bg-navbar rounded-4xl text-primary-text animate-fade-in md:px-30 md:py-30`} ref={modalRef}>
                     <div
                         className={`absolute right-5 top-5 cursor-pointer animate-slide-up`}
                         onClick={() => {setContactListOpen(false)}}
                     >
                         <X size={30}/>
                     </div>
-                    <div className={`flex flex-col gap-10`}>
+                    <div className={`flex flex-col items-start justify-end gap-10 `}>
                         <div className={`flex flex-col gap-5 animate-fade-in-delay-1`}>
                             <p className={`text-4xl font-bold`}>Hussam Abdullah Azzam</p>
                             <p className={`text-3xl `}>Jordan, Irbed</p>
@@ -127,7 +143,7 @@ function App() {
                     </div>
                 </div>
             )}
-          <header  className={`fixed flex justify-around items-center w-full  h-[6rem] bg-bg-navbar z-50`}>
+          <header  className={`fixed flex justify-around items-center w-full  h-24 bg-bg-navbar z-50`}>
               <div className={`w-[90%] md:w-[60%] h-[100% - 6rem] flex justify-between items-center`}>
                   <div className="logo flex items-center justify-center select-none">
                      <p style={{fontFamily: 'Great Vibes' }}
@@ -223,10 +239,11 @@ function App() {
                         <i className="devicon-html5-plain text-[50px]"></i>
                         <i className="devicon-css3-plain text-[50px]"></i>
                         <i className="devicon-javascript-plain text-[50px]"></i>
-                        <i className="devicon-nodejs-plain text-[50px]"></i>
-                        <i className="devicon-tailwindcss-original text-[50px]"></i>
                         <i className="devicon-react-original text-[50px]"></i>
                         <i className="devicon-nextjs-plain text-[50px]"></i>
+                        <i className="devicon-nodejs-plain text-[50px]"></i>
+                        <i className="devicon-express-original text-[50px]"></i>
+                        <i className="devicon-tailwindcss-original text-[50px]"></i>
 
                     </div>
                 </section>
@@ -234,20 +251,11 @@ function App() {
                 <section  className="flex flex-col items-center gap-10  select-none">
                     <p className={`text-[3rem] font-bold gradient-orange`}>PROJECTS</p>
                     <div id={`projects-container`} className={`flex items-center justify-center gap-10`}>
-                        <div id={`workstation`} className={`project-card`}>
-                            <img src={workstation} alt="workstation"
-                                 className={`project-image`}
-                            />
-                            <a href={`https://workstation-q09c.onrender.com/`} target={`_blank`}
-                               className={`project-link hover:opacity-90`}
-                            >
-                                <div>
-                                    <p>CLICK HERE TO VISIT</p>
-                                    <p className={`project-title`}>WORKSTATION</p>
-                                </div>
-                                <ArrowUpRight/>
-                            </a>
-                        </div>
+                        {
+                            projects.map((project, index) => (
+                                <ProjectCard id={index} name={project.name} image={project.image} link={project.link} />
+                            ))
+                        }
                     </div>
                     </section>
                 <div id={`education`}></div>
